@@ -1,0 +1,38 @@
+.form__input {
+  margin: 20px 0;
+  position: relative;
+  width: 100%;
+  font-size: inherit;
+  label {
+    display: block;
+    position: absolute;
+    bottom: 3px;
+    transition: 0.3s;
+    pointer-events: none;
+    transition: 0.3s;
+    color: rgba(0, 0, 0, 0.829);
+  }
+  input {
+    font-size: inherit;
+    padding: 10px 0;
+    background-color: transparent;
+    display: block;
+    border: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.377);
+    border-radius: 3px;
+    transition: 0.3s;
+    height: 30px;
+    &:focus {
+      border-color: black;
+      outline: none;
+    }
+    &:focus ~ label {
+      font-size: 10px;
+    }
+  }
+  .shrink {
+    top: -14px;
+    font-size: 12px;
+    color: black;
+  }
+}
