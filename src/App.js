@@ -10,12 +10,12 @@ import { selectUserId } from './redux/user/user.selectors';
 import { userTypes } from './redux/user/user.types';
 import { typeAction } from './assets/functions';
 
-const App=({dispatch})=> {
+const App=()=> {
 
   useEffect(() => {
-    dispatch(typeAction(userTypes.CHECK_USER_SESSION))
+    typeAction(userTypes.CHECK_USER_SESSION)
   
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="App">
@@ -41,7 +41,5 @@ const App=({dispatch})=> {
     </div>
   );
 }
-const mapStateToProps = createStructuredSelector({
-  userId:selectUserId
-})
-export default connect(mapStateToProps)(App);
+
+export default App;

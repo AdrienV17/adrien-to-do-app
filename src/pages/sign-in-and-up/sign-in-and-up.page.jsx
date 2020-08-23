@@ -13,7 +13,7 @@ import { selectUserId } from "../../redux/user/user.selectors";
 import { userTypes } from "../../redux/user/user.types";
 import { signInForm, signUpForm } from "../../assets/base-data";
 
-const SignInAndUp = ({ isSignIn, history, userId, dispatch, ...props }) => {
+const SignInAndUp = ({ isSignIn, history, userId, ...props }) => {
   const signForm = isSignIn ? signInForm : signUpForm;
   // Form State
   const [userCredentials, setUserCredentials] = useState(signForm);
@@ -33,18 +33,18 @@ const SignInAndUp = ({ isSignIn, history, userId, dispatch, ...props }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setUserCredentials(isSignIn ? signInForm : signUpForm);
     const userRawCredentials = {};
 
     stateKeys.map(
       (key) => (userRawCredentials[key] = userCredentials[key].value)
     );
-    dispatch(
+   
       payloadAction(
         isSignIn ? userTypes.SIGN_IN_EMAIL_START : userTypes.SIGN_UP_START,
         userRawCredentials
       )
-    );
-    setUserCredentials(isSignIn ? signInForm : signUpForm);
+    
   };
   // Transitions
   const fadeIn = useSpring(fadeInSpring);

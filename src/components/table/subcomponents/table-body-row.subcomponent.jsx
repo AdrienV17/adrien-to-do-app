@@ -1,19 +1,40 @@
-import React from 'react';
-import { css } from 'aphrodite';
-import { tableBodyRowStyles } from './table-body-row.substyles';
+import React from "react";
+import { css } from "aphrodite/no-important";
+import { tableBodyRowStyles as tBDS } from "./table-body-row.substyles";
+import { payloadAction, getMillisecondsDate } from "../../../assets/functions";
+import { userTypes } from "../../../redux/user/user.types";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectUserId } from "../../../redux/user/user.selectors";
 
-
-const TableBodyRow = ({task,deleteTask}) => {
-    return (
-        <tr  className={css(tableBodyRowStyles.tBodyTr)}>
-        <td className={css(tableBodyRowStyles.tBodyTd)}>
-        <i onClick={()=>deleteTask(task)} className={`far fa-trash-alt ${css(tableBodyRowStyles.delete)}`}></i>              {task.thing.value}</td>
-        <td className={css(tableBodyRowStyles.tBodyTd)}>
-          {task.dueDate.value} - {task.time.value}
-        </td>
-        <td className={css(tableBodyRowStyles.tBodyTd)}>{task.status}</td>
-      </tr>
-     );
-}
- 
-export default TableBodyRow;
+const TableBodyRow = ({ task, userId }) => {
+  const deleteTask = () =>
+    payloadAction(userTypes.REMOVE_THING_TO_DO_START, {
+      userId,
+      thingToDo: task,
+    });
+  const isLate =
+    getMillisecondsDate(task.dueDate.value, task.time.value) <
+    new Date().getTime();
+  const tableBodyRowStyles = tBDS(isLate);
+  console.log('isLate',isLate);
+  return (
+    <tr className={css(tableBodyRowStyles.tBodyTr)}>
+      <td className={css(tableBodyRowStyles.tBodyTd)}>
+        <i
+          onClick={deleteTask}
+          className={`far fa-trash-alt ${css(tableBodyRowStyles.delete)}`}
+        ></i>{" "}
+        {task.thing.value}
+      </td>
+      <td className={css(tableBodyRowStyles.tBodyTd)}>
+        {task.dueDate.value} - {task.time.value}
+      </td>
+      <td className={css(tableBodyRowStyles.tBodyTd)}>{task.status}</td>
+    </tr>
+  );
+};
+const mapStateToProps = createStructuredSelector({
+  userId: selectUserId,
+});
+export default connect(mapStateToProps)(TableBodyRow);

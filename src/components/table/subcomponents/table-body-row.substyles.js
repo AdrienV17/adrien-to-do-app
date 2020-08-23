@@ -2,9 +2,11 @@ import { StyleSheet } from "aphrodite";
 import { growEffect } from "../../../assets/globalStyles";
 
 
-export const tableBodyRowStyles = StyleSheet.create({
+export const tableBodyRowStyles = (isLate)=> StyleSheet.create({
     tBodyTr: {
-        height:75,
+      backgroundColor:isLate?'#ff000066':'transparent',
+      textAlign:'left',
+      height:75,
         borderBottom:'2px dashed gray',
         transition:'0.3s',
         cursor:'pointer',

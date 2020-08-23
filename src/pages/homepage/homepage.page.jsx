@@ -11,7 +11,7 @@ import { createStructuredSelector } from "reselect";
 import { selectUserId,selectUserName } from "../../redux/user/user.selectors";
 import { typeAction } from '../../assets/functions';
 import { userTypes } from '../../redux/user/user.types';
-const Homepage = ({id,dispatch,name, history}) => {
+const Homepage = ({id,name, history}) => {
   const fadeIn = useSpring({
     ...fadeInSpring,
     delay:0
@@ -26,13 +26,13 @@ const Homepage = ({id,dispatch,name, history}) => {
       {/* Homepage Container */}
       <animated.div style={fadeIn} className={css(homepageStyles.homepageContainer)}>
         {/* Sign in/up Button */}
-        <div onClick={()=>dispatch(typeAction(userTypes.SIGN_OUT))} className={css(homepageStyles.signButton)}>Sign Out</div>
+        <div onClick={()=>typeAction(userTypes.SIGN_OUT)} className={css(homepageStyles.signButton)}>Sign Out</div>
         {/* Header */}
         <div className={css(homepageStyles.header)}>
           {/* Big list Image */}
           <i className={`fas fa-list-ul ${css(homepageStyles.i)}`}></i>
           {/* Title */}
-          <div className="header__title">Welcome, {name}!</div>
+          <div className="header__title">Hello, {name}!</div>
         </div>
         {/* List of options */}
         <div className={css(homepageStyles.text)}>

@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { css } from "aphrodite";
 import { tableStyles } from "./table.styles";
-import { thingsToDoHeader, dummyTasks } from "../../assets/base-data";
+import { thingsToDoHeader } from "../../assets/base-data";
 import TableBodyRow from './subcomponents/table-body-row.subcomponent';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectUserThingsToDo } from '../../redux/user/user.selectors';
+import Default404 from '../default-404/default-404.component';
 
 const Table = ({
   headArray = thingsToDoHeader,
-  bodyArray = dummyTasks,
+  bodyArray,
   ...otherProps
 }) => {
-  const [thingsToDo,setThingsToDo] = useState(bodyArray)
-  const deleteTask = (task) =>{
-    const filteredArray = thingsToDo.filter(t=>t.thing!==task.thing)
-    setThingsToDo(filteredArray)
-  }
+
   
   return (
     <table className={css(tableStyles.table)}>
@@ -32,12 +32,16 @@ const Table = ({
         </tr>
       </thead>
       <tbody>
-        {thingsToDo.map((task, i) => (
-        <TableBodyRow key={i} task={task} deleteTask={deleteTask}/>
+        {bodyArray.map((task, i) => (
+        <TableBodyRow key={i} task={task}/>
         ))}
       </tbody>
     </table>
   );
 };
 
-export default Table;
+const mapStateToProps = createStructuredSelector({
+  bodyArray: selectUserThingsToDo
+})
+
+export default connect(mapStateToProps)(Table);

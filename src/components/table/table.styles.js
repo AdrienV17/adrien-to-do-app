@@ -2,7 +2,7 @@ import { StyleSheet } from "aphrodite";
 
 export const tableStyles = StyleSheet.create({
     table: {
-        width: "90%",
+        width: "100%",
         maxWidth: 1500,
         margin: "30px auto",
         borderCollapse: "collapse",

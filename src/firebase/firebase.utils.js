@@ -12,6 +12,7 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 export const storage = firebase.storage();
 
+// Get Current User in session
 export const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
     const unsubscribe = auth.onAuthStateChanged(userAuth => {
@@ -20,6 +21,8 @@ export const getCurrentUser = () => {
     }, reject);
   });
 };
+
+// Add New user to firestore
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
   try {
@@ -45,3 +48,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     errorNotification("Database Error", message);
   }
 };
+
+// Locate User in firestore
+
+export const locateUser = async (userId)=> await firestore.doc(`users/${userId}`)

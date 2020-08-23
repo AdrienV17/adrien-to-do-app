@@ -3,14 +3,19 @@ import { css } from "aphrodite/no-important";
 import { todayThingsStyle } from "./today-things.styles";
 import { withRouter } from "react-router-dom";
 import Table from "../../components/table/table.component";
-import { thingsToDoHeader } from "../../assets/base-data";
+import { thingsToDoHeader, dummyTasks } from "../../assets/base-data";
 import Button from "../../components/button/custom-button.component";
 import Modal from "../../components/modal/modal.component";
 import ThingForm from "../../components/thing-form/thing-form.component";
 import { useSpring, animated } from "react-spring";
 import { fadeInSpring } from "../../assets/springs";
-
-const TodayThingsPage = ({ history }) => {
+import { payloadAction } from "../../assets/functions";
+import { userTypes } from "../../redux/user/user.types";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectUserThingsToDoLength } from "../../redux/user/user.selectors";
+import Default404 from "../../components/default-404/default-404.component";
+const TodayThingsPage = ({ history,thingsToDoLength }) => {
   const fadeIn = useSpring(fadeInSpring)
   return (
     // page
@@ -36,10 +41,12 @@ const TodayThingsPage = ({ history }) => {
           </Modal>
         </div>
         {/* Table */}
-        <Table headArray={thingsToDoHeader} />
+        {thingsToDoLength?<Table headArray={thingsToDoHeader}/>: <Default404 height={30} title='No Things to Do' subtitle="Create One!!"/> }
       </animated.div>
     </div>
   );
 };
-
-export default withRouter(TodayThingsPage);
+const mapStateToProps = createStructuredSelector({
+  thingsToDoLength: selectUserThingsToDoLength
+})
+export default connect(mapStateToProps)(withRouter(TodayThingsPage));

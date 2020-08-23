@@ -4,8 +4,13 @@ import FormInput from "../form-input/form-input.component";
 import { css } from "aphrodite/no-important";
 import { thingFormStyles } from "./thing.form.styles";
 import Button from "../button/custom-button.component";
+import { typeAction, payloadAction } from "../../assets/functions";
+import { userTypes } from "../../redux/user/user.types";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectUserId } from "../../redux/user/user.selectors";
 
-const ThingForm = ({ title, ...props }) => {
+const ThingForm = ({ title, userId, ...props }) => {
   const [formState, setFormState] = useState(thingForm);
   const handleChange = ({ target: { name, value } }) => {
     setFormState({
@@ -16,16 +21,18 @@ const ThingForm = ({ title, ...props }) => {
       },
     });
   };
-  const handleSubmit = (event) =>{
-      event.preventDefault();
-      dummyTasks.push(formState)
-      console.log(formState);
-      setFormState(thingForm)
-        if(props.setIsVisible){
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await payloadAction(userTypes.ADD_THING_TO_DO_START, {
+      userId,
+      thingToDo: { ...formState, createdAt: new Date() },
+    });
+    await setFormState(thingForm);
 
-            props.setIsVisible(false)
-        }
-  }
+    if (props.setIsVisible) {
+      props.setIsVisible(false);
+    }
+  };
   return (
     // container
     <div className={css(thingFormStyles.container)}>
@@ -56,14 +63,17 @@ const ThingForm = ({ title, ...props }) => {
           {/* image */}
           <div className={css(thingFormStyles.image)}></div>
         </div>
-                {/* formButton  */}
-                <div className={css(thingFormStyles.formButtom)}>
-
-        <Button type="submit">Add Thing to Do</Button>
-                </div>
+        {/* formButton  */}
+        <div className={css(thingFormStyles.formButtom)}>
+          <Button type="submit">Add Thing to Do</Button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default ThingForm;
+const mapStateToProps = createStructuredSelector({
+  userId: selectUserId,
+});
+
+export default connect(mapStateToProps)(ThingForm);
