@@ -16,6 +16,10 @@ export const todayThingsStyle = StyleSheet.create({
         ...growEffect.active
       },
   },
+  modalButton:{
+    width:"fit-content"
+  },
+
   card: {
     ...cardStyle,
     height:500,

@@ -44,3 +44,5 @@ export const sortThingsToDoByDate = (thingsToDo) =>
       getMillisecondsDate(a.dueDate.value, a.time.value) -
       getMillisecondsDate(b.dueDate.value, b.time.value)
   );
+
+export const setIsFetching = (isFetching,set,delay) => setTimeout(()=>set(isFetching),delay)

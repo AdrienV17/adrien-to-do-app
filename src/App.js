@@ -4,9 +4,6 @@ import { Switch, Route } from "react-router-dom";
 import SignInAndUp from "./pages/sign-in-and-up/sign-in-and-up.page";
 import Homepage from "./pages/homepage/homepage.page";
 import TodayThingsPage from "./pages/today-things/today-things.page";
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { selectUserId } from './redux/user/user.selectors';
 import { userTypes } from './redux/user/user.types';
 import { typeAction } from './assets/functions';
 

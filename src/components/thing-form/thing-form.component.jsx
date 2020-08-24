@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { thingForm, thingFormKeys, dummyTasks } from "../../assets/base-data";
+import Button from "../button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
+import { thingForm, thingFormKeys } from "../../assets/base-data";
 import { css } from "aphrodite/no-important";
 import { thingFormStyles } from "./thing.form.styles";
-import Button from "../button/custom-button.component";
-import { typeAction, payloadAction } from "../../assets/functions";
+import { payloadAction } from "../../assets/functions";
 import { userTypes } from "../../redux/user/user.types";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";

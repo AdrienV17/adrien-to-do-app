@@ -42,9 +42,10 @@ export const thingForm = {
     type: "text",
   },
   status: "Pending",
+  imgUrl:''
 };
 export const thingFormKeys = Object.keys(thingForm).filter(
-  (t) => t !== "status"
+  (t) => t !== "status" && t !== 'imgUrl'
 );
 
 export const signInForm = {
@@ -79,113 +80,3 @@ password: {
   type: "password",
 },};
 // Things to delete when finished proyect...
-export const dummyTasks = [
-  {
-    thing: {
-      value: "Clean the House",
-      required: true,
-      label: "Name",
-      type: "text",
-    },
-    dueDate: {
-      value: getFullStringDate(),
-      required: false,
-      label: "Due Date",
-      type: "date",
-    },
-    time: {
-      value: getFullStringTime(),
-      required: false,
-      label: "Time",
-      type: "time",
-    },
-    description: {
-      value: "",
-      required: false,
-      label: "Description",
-      type: "text",
-    },
-    status: "Pending",
-  },
-  {
-    thing: {
-      value: "Exercise",
-      required: true,
-      label: "Name",
-      type: "text",
-    },
-    dueDate: {
-      value: getFullStringDate(),
-      required: false,
-      label: "Due Date",
-      type: "date",
-    },
-    time: {
-      value: getFullStringTime(),
-      required: false,
-      label: "Time",
-      type: "time",
-    },
-    description: {
-      value: "",
-      required: false,
-      label: "Description",
-      type: "text",
-    },
-    status: "Pending",
-  },
-  {
-    thing: {
-      value: "Breakfast",
-      required: true,
-      label: "Name",
-      type: "text",
-    },
-    dueDate: {
-      value: getFullStringDate(),
-      required: false,
-      label: "Due Date",
-      type: "date",
-    },
-    time: {
-      value: getFullStringTime(),
-      required: false,
-      label: "Time",
-      type: "time",
-    },
-    description: {
-      value: "",
-      required: false,
-      label: "Description",
-      type: "text",
-    },
-    status: "Pending",
-  },
-  {
-    thing: {
-      value: "Shower",
-      required: true,
-      label: "Name",
-      type: "text",
-    },
-    dueDate: {
-      value: getFullStringDate(),
-      required: false,
-      label: "Due Date",
-      type: "date",
-    },
-    time: {
-      value: getFullStringTime(),
-      required: false,
-      label: "Time",
-      type: "time",
-    },
-    description: {
-      value: "",
-      required: false,
-      label: "Description",
-      type: "text",
-    },
-    status: "Pending",
-  },
-];

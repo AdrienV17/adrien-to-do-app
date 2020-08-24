@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../components/button/custom-button.component";
 import FormInput from "../../components/form-input/form-input.component";
 import { withRouter } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 import { signInAndUpStyles } from "./sign-in-and-up.styles";
 import { css } from "aphrodite/no-important";
-import { payloadAction } from "../../assets/functions";
+import { payloadAction, typeAction } from "../../assets/functions";
 import { fadeInSpring } from "../../assets/springs";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { selectUserId } from "../../redux/user/user.selectors";
+import { selectUserId, selectUserErrorMessage } from "../../redux/user/user.selectors";
 import { userTypes } from "../../redux/user/user.types";
 import { signInForm, signUpForm } from "../../assets/base-data";
 
-const SignInAndUp = ({ isSignIn, history, userId, ...props }) => {
+const SignInAndUp = ({ isSignIn, errorMessage, history, userId, ...props }) => {
   const signForm = isSignIn ? signInForm : signUpForm;
   // Form State
   const [userCredentials, setUserCredentials] = useState(signForm);
@@ -21,6 +21,9 @@ const SignInAndUp = ({ isSignIn, history, userId, ...props }) => {
   if (userId) {
     history.push("/");
   }
+  useEffect(()=>{
+    typeAction(userTypes.REMOVE_ERROR_MESSAGE)
+  },[])
   // Handlers
   const handleChange = ({ target: { name, value } }) =>
     setUserCredentials({
@@ -33,18 +36,17 @@ const SignInAndUp = ({ isSignIn, history, userId, ...props }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setUserCredentials(isSignIn ? signInForm : signUpForm);
     const userRawCredentials = {};
 
     stateKeys.map(
       (key) => (userRawCredentials[key] = userCredentials[key].value)
     );
-   
-      payloadAction(
-        isSignIn ? userTypes.SIGN_IN_EMAIL_START : userTypes.SIGN_UP_START,
-        userRawCredentials
-      )
-    
+
+    payloadAction(
+      isSignIn ? userTypes.SIGN_IN_EMAIL_START : userTypes.SIGN_UP_START,
+      userRawCredentials
+    );
+    setUserCredentials(isSignIn ? signInForm : signUpForm);
   };
   // Transitions
   const fadeIn = useSpring(fadeInSpring);
@@ -62,6 +64,8 @@ const SignInAndUp = ({ isSignIn, history, userId, ...props }) => {
         </div>
         {/* Form Container */}
         <div className={css(signInAndUpStyles.signInForm)}>
+          {/* errorMessage */}
+  <div style={{display:errorMessage?'block':'none'}} className={css(signInAndUpStyles.errorMessage)}>{errorMessage}</div>
           {/* Form */}
           <form onSubmit={handleSubmit} className={css(signInAndUpStyles.form)}>
             {/* Inputs */}
@@ -106,5 +110,6 @@ const SignInAndUp = ({ isSignIn, history, userId, ...props }) => {
 
 const mapStateToProps = createStructuredSelector({
   userId: selectUserId,
+  errorMessage:selectUserErrorMessage
 });
 export default connect(mapStateToProps)(withRouter(SignInAndUp));

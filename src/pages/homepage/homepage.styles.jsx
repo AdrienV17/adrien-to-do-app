@@ -30,13 +30,6 @@ export const homepageStyles = StyleSheet.create({
   },
   i: {
     fontSize: 300,
-    transition: "0.3s",
-    ":hover": {
-      ...customTextHover.hover,
-    },
-    ":active": {
-        ...customTextHover.active,
-      },
   },
   text: {
     fontSize: 25,

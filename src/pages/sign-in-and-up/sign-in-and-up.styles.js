@@ -20,6 +20,11 @@ export const signInAndUpStyles = StyleSheet.create({
     justifyContent: "space-between",
     fontSize: 25,
   },
+  errorMessage:{
+    margin:'20px 0',
+    color:'red',
+    
+  },
   footer: {
     margin: "50px 0 0 0",
     fontSize: 20,

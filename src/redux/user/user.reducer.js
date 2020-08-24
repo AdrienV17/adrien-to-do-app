@@ -18,6 +18,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isFetching: true,
+        errorMessage: undefined,
       };
     case userTypes.SIGN_IN_SUCCESS:
     case userTypes.ADD_THING_TO_DO_SUCCESS:
@@ -38,6 +39,12 @@ export const userReducer = (state = INITIAL_STATE, action) => {
       };
     case userTypes.SIGN_OUT:
       return INITIAL_STATE;
+    case userTypes.REMOVE_ERROR_MESSAGE:{
+      return{
+        ...state,
+        errorMessage:undefined
+      }
+    }
     default:
       return state;
   }
