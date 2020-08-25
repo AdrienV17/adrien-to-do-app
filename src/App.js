@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import SignInAndUp from "./pages/sign-in-and-up/sign-in-and-up.page";
 import Homepage from "./pages/homepage/homepage.page";
 import TodayThingsPage from "./pages/today-things/today-things.page";
+import Footer from './components/footer/footer.component'
 import { userTypes } from './redux/user/user.types';
 import { typeAction } from './assets/functions';
 
@@ -35,6 +36,7 @@ const App=()=> {
           render={({ location,history}) => history.push(location.state.route)}
         />
       </Switch>
+      <Footer/>
     </div>
   );
 }

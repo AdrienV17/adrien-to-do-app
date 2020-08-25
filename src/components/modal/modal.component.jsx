@@ -4,7 +4,7 @@ import { modalStyles } from "./modal.styles";
 import ModalContainer from "./subcomponents/modal-container.subcomponent";
 
 const Modal = ({ children, trigger, visible = false, ...otherProps }) => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(visible);
   //   Passing SetIsVisible Prop
   const childrenComponent = isValidElement(children)
     ? cloneElement(children, { setIsVisible })

@@ -11,8 +11,8 @@ export const thingsToDoHeader = [
     prop: "dueDate",
   },
   {
-    name: "Status",
-    prop: "status",
+    name: "Due Time",
+    prop: "time",
   },
 ];
 
@@ -35,18 +35,10 @@ export const thingForm = {
     label: "Time",
     type: "time",
   },
-  description: {
-    value: "",
-    required: false,
-    label: "Description",
-    type: "text",
-  },
-  status: "Pending",
-  imgUrl:''
+
+
 };
-export const thingFormKeys = Object.keys(thingForm).filter(
-  (t) => t !== "status" && t !== 'imgUrl'
-);
+export const thingFormKeys = Object.keys(thingForm)
 
 export const signInForm = {
   email: {
@@ -79,4 +71,21 @@ password: {
   value: "",
   type: "password",
 },};
-// Things to delete when finished proyect...
+export const socialMedia = [
+  {
+    icon:'fab fa-facebook-square',
+    name:'Facebook',
+    pageLink:'https://www.facebook.com/hernan.adrian1'
+  },
+  {
+    icon:'fab fa-instagram',
+    name:'Instagram',
+    pageLink:'https://www.instagram.com/adrien_v17/'
+  }, {
+    icon:'fab fa-github',
+    name:'Github',
+    pageLink:'https://github.com/AdrienV17'
+
+  },
+]
+

@@ -1,0 +1,49 @@
+.footer {
+  height: 50vh;
+  background-color: black;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .footer__header {
+    font-family: 'Yellowtail';
+    .header__title {
+      font-size: 150px;
+    }
+  }
+  
+  .footer__social-media {
+    position: relative;
+    top: -20px;
+    .social-media__social {
+      display: inline-block;
+      border-right: 2px solid white;
+      padding: 0 20px;
+      font-size: 30px;
+      font-weight: bold;
+
+      transition: 0.3s;
+      &:hover {
+        color: #af2b2b;
+      }
+
+      i,
+      a {
+        display: inline-block;
+      }
+      i {
+        margin-right: 10px;
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+  .footer__copyright {
+    margin: auto;
+      }
+    
+}

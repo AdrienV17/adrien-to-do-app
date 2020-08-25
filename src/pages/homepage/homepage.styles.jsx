@@ -27,12 +27,20 @@ export const homepageStyles = StyleSheet.create({
     fontSize: 50,
     textAlign: "center",
     margin: "30px 0px",
+    '@media (max-width:1000px)':{
+      fontSize:25    }
   },
   i: {
     fontSize: 300,
+    '@media (max-width:1000px)':{
+      fontSize:150
+    }
   },
   text: {
     fontSize: 25,
+    '@media (max-width:1000px)':{
+      fontSize:20
+    }
   },
   li: {
     transition: "0.3s",

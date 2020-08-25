@@ -11,6 +11,7 @@ import {
   createUserProfileDocument,
   getCurrentUser,
   locateUser,
+  storage,
 } from "../../firebase/firebase.utils";
 
 // General Functions
@@ -26,7 +27,7 @@ export function* getSnapshotFromUserAuth(user, additionalData) {
     );
   } catch ({ message }) {
     yield errorNotification("Saga Error", message);
-    yield put(plainAction(userTypes.SIGN_IN_FAILURE,message));
+    yield put(plainAction(userTypes.SIGN_IN_FAILURE, message));
   }
 }
 export function* isUserAuthenticated() {
@@ -48,7 +49,7 @@ export function* signIn({ payload: { email, password } }) {
     yield getSnapshotFromUserAuth(user);
   } catch ({ message }) {
     yield errorNotification("Saga Error", message);
-    yield put(plainAction(userTypes.SIGN_IN_FAILURE,message));
+    yield put(plainAction(userTypes.SIGN_IN_FAILURE, message));
   }
 }
 
@@ -65,7 +66,7 @@ export function* signUp({ payload: { email, password, name } }) {
     );
   } catch ({ message }) {
     yield errorNotification("Saga Error", message);
-    yield put(plainAction(userTypes.SIGN_UP_FAILURE,message));
+    yield put(plainAction(userTypes.SIGN_UP_FAILURE, message));
   }
 }
 export function* signInAfterSignUp({ payload: { user, additionalData } }) {
@@ -84,6 +85,10 @@ export function* addThingToDo({ payload: { userId, thingToDo } }) {
     const userRef = yield locateUser(userId);
     const snapShot = yield userRef.get();
     const data = yield snapShot.data();
+    if(thingToDo.image){
+      const image = yield addThingToDoImage(userId,thingToDo);
+      thingToDo.image = image;
+    }
     const thingsToDo = yield [...data.thingsToDo, thingToDo];
     yield userRef.set({
       ...data,
@@ -92,29 +97,62 @@ export function* addThingToDo({ payload: { userId, thingToDo } }) {
     yield put(plainAction(userTypes.ADD_THING_TO_DO_SUCCESS, { thingsToDo }));
   } catch ({ message }) {
     yield errorNotification("Saga Error", message);
-    yield put(plainAction(userTypes.SIGN_UP_FAILURE,message));
+    yield put(plainAction(userTypes.SIGN_UP_FAILURE, message));
   }
 }
 // Remove thing to do
 
-export function* removeThingToDo({payload:{userId,thingToDo}}){
+export function* removeThingToDo({ payload: { userId, thingToDo } }) {
   try {
     const userRef = yield locateUser(userId);
     const snapShot = yield userRef.get();
     const data = yield snapShot.data();
-    const thingsToDo = yield data.thingsToDo.filter(t=>t.thing.value!==thingToDo.thing.value)
+    const thingsToDo = yield data.thingsToDo.filter(
+      (t) => t.thing.value !== thingToDo.thing.value
+    );
     yield userRef.set({
       ...data,
-      thingsToDo
-    })
-    yield put(plainAction(userTypes.REMOVE_THING_TO_DO_SUCCESS,{thingsToDo}))
-    
+      thingsToDo,
+    });
+    yield put(
+      plainAction(userTypes.REMOVE_THING_TO_DO_SUCCESS, { thingsToDo })
+    );
   } catch ({ message }) {
     yield errorNotification("Saga Error", message);
-    yield put(plainAction(userTypes.REMOVE_THING_TO_DO_FAILURE,message));
+    yield put(plainAction(userTypes.REMOVE_THING_TO_DO_FAILURE, message));
   }
 }
 
+// Add Thing to do Image
+
+export function* addThingToDoImage(userId, formState) {
+  try {
+    yield put(plainAction(userTypes.SET_IMAGE_START))
+    const storageRef = yield storage
+      .ref()
+      .child(`${userId}/${formState.thing.value}/${formState.image.name}`);
+    const documentUploaded = yield storageRef.put(formState.image);
+    let url;
+    documentUploaded.on(
+      "state_changed",
+      () => {},
+      ({ message }) => {
+        errorNotification("Storage Error", message);
+      },
+      async () => {
+        url = await storageRef
+          .child(`${userId}/${formState.thing.value}/${formState.image.name}`)
+          .getDownloadURL();
+      }
+    );
+      yield put(plainAction(userTypes.SET_IMAGE_SUCESS))
+    return url;
+  
+  } catch ({ message }) {
+    yield errorNotification("Saga Error", message);
+    yield put(plainAction(userTypes.SET_IMAGE_FAILURE, message));
+  }
+}
 export function* userSagas() {
   yield all([
     call(sagaFunction(userTypes.SIGN_UP_START, signUp)),

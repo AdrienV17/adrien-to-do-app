@@ -13,6 +13,9 @@ export const tableStyles = StyleSheet.create({
       tHeadTr: {
         height: 40,
         fontSize: 30,
+        '@media (max-width:1000px)':{
+          fontSize:20
+        }
       },
      
       i:{

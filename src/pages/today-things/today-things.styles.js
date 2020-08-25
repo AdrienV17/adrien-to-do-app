@@ -28,5 +28,8 @@ export const todayThingsStyle = StyleSheet.create({
   header: {
     margin: "20px 0",
     fontSize: 50,
+    '@media (max-width:1000px)':{
+      fontSize:35
+    }
   },
 });

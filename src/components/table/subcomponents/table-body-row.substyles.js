@@ -17,7 +17,10 @@ export const tableBodyRowStyles = (isLate)=> StyleSheet.create({
     },
     tBodyTd: {
       paddingLeft:10,
-      fontSize:20
+      fontSize:20,
+      '@media (max-width:1000px)':{
+        fontSize:15
+      }
     },
  
     delete:{

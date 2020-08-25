@@ -29,6 +29,9 @@ export const signInAndUpStyles = StyleSheet.create({
     margin: "50px 0 0 0",
     fontSize: 20,
     lineHeight: 1.5,
+    '@media (max-width:1000px)':{
+      fontSize:15
+    }
   },
   footerLinks: {
     width: "fit-content",

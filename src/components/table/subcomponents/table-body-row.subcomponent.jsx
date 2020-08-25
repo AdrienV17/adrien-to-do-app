@@ -17,7 +17,6 @@ const TableBodyRow = ({ task, userId }) => {
     getMillisecondsDate(task.dueDate.value, task.time.value) <
     new Date().getTime();
   const tableBodyRowStyles = tBDS(isLate);
-  console.log('isLate',isLate);
   return (
     <tr className={css(tableBodyRowStyles.tBodyTr)}>
       <td className={css(tableBodyRowStyles.tBodyTd)}>
@@ -28,9 +27,9 @@ const TableBodyRow = ({ task, userId }) => {
         {task.thing.value}
       </td>
       <td className={css(tableBodyRowStyles.tBodyTd)}>
-        {task.dueDate.value} - {task.time.value}
+        {task.dueDate.value} 
       </td>
-      <td className={css(tableBodyRowStyles.tBodyTd)}>{task.status}</td>
+      <td className={css(tableBodyRowStyles.tBodyTd)}>{task.time.value}</td>
     </tr>
   );
 };

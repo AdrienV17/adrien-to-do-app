@@ -8,9 +8,12 @@ import { payloadAction } from "../../assets/functions";
 import { userTypes } from "../../redux/user/user.types";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { selectUserId } from "../../redux/user/user.selectors";
+import {
+  selectUserId,
+  selectThingsToDoName,
+} from "../../redux/user/user.selectors";
 
-const ThingForm = ({ title, userId, ...props }) => {
+const ThingForm = ({ title, userId, thingsToDoName, ...props }) => {
   const [formState, setFormState] = useState(thingForm);
   const handleChange = ({ target: { name, value } }) => {
     setFormState({
@@ -23,16 +26,24 @@ const ThingForm = ({ title, userId, ...props }) => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await payloadAction(userTypes.ADD_THING_TO_DO_START, {
-      userId,
-      thingToDo: { ...formState, createdAt: new Date() },
-    });
-    await setFormState(thingForm);
 
+   
+    const isNameAlready = Boolean(thingsToDoName.filter(t=>t===formState.thing.value).length)
+    if (isNameAlready) {
+      alert("That Name is Already on your list");
+      return;
+    } else {
+      await payloadAction(userTypes.ADD_THING_TO_DO_START, {
+        userId,
+        thingToDo: { ...formState, createdAt: new Date() },
+      });
+      await setFormState(thingForm);
+    }
     if (props.setIsVisible) {
       props.setIsVisible(false);
     }
   };
+
   return (
     // container
     <div className={css(thingFormStyles.container)}>
@@ -42,8 +53,8 @@ const ThingForm = ({ title, userId, ...props }) => {
         <div className={css(thingFormStyles.headerTitle)}>{title}</div>
       </div>
       {/* form */}
+      {/* flexContainer */}
       <form onSubmit={handleSubmit} className={css(thingFormStyles.form)}>
-        {/* flexContainer */}
         <div className={css(thingFormStyles.flexContainer)}>
           {/* formInputs */}
           <div className={css(thingFormStyles.formInputs)}>
@@ -60,8 +71,6 @@ const ThingForm = ({ title, userId, ...props }) => {
               />
             ))}
           </div>
-          {/* image */}
-          <div className={css(thingFormStyles.image)}></div>
         </div>
         {/* formButton  */}
         <div className={css(thingFormStyles.formButtom)}>
@@ -74,6 +83,7 @@ const ThingForm = ({ title, userId, ...props }) => {
 
 const mapStateToProps = createStructuredSelector({
   userId: selectUserId,
+  thingsToDoName: selectThingsToDoName,
 });
 
 export default connect(mapStateToProps)(ThingForm);

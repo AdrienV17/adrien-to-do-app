@@ -42,7 +42,7 @@ const HomepageJSX = ({ name,id }) => {
         <div className={css(homepageStyles.text)}>
           <ul>
             <li className={css(homepageStyles.li)}>
-              <Link to="/today">See Today List</Link>
+              <Link to="/today">See List</Link>
             </li>
             <li style={{ cursor: "pointer" }}>
               <Modal trigger="Add Another Thing to Do">

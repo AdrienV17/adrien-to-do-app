@@ -5,6 +5,13 @@ export const cardStyle = {
   color: "black",
   borderRadius: 50,
   padding: "50px 100px",
+  '@media (max-width:1000px)':{
+    padding:'50px 25px',
+    width:'90%',
+    height: '90%',
+    overflow: 'auto',
+    
+  }
 };
 export const goBackButton = {
   position: "absolute",
@@ -13,6 +20,10 @@ export const goBackButton = {
   top: 20,
   transition: "0.3s",
   cursor: "pointer",
+  backgroundColor:'#0000002b',
+  padding:20,
+  boxShadow:'10px 10px 5px 0px rgba(0,0,0,0.75)',
+  borderRadius:50
 };
 export const customTextHover = {
   hover: {

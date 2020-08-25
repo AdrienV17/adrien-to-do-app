@@ -39,3 +39,10 @@ export const selectUserErrorMessage = createSelector(
   [selectUserState],
   user => user.errorMessage
 )
+
+// Select thingsToDoName
+
+export const selectThingsToDoName = createSelector(
+  [selectUserState],
+  user=>user.thingsToDo.map(thingToDo=>thingToDo.thing.value)
+)
